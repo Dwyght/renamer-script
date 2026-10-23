@@ -1,20 +1,42 @@
 # Rename files and folders from Excel
 
+Repository layout:
+
+```text
+rename-folder-names/
+|-- scripts/
+|   `-- rename_from_excel.py
+|-- config/
+|   `-- config.json
+|-- data/
+|   |-- mappings/          Excel mapping workbooks
+|   `-- NAP_Davao/         Current dataset
+|-- .rename-history/       Local rename history and locks (ignored by Git)
+|-- .gitignore
+|-- README.md
+`-- requirements.txt
+```
+
 Install the dependency, preview, then apply:
 
 ```powershell
 python -m pip install -r requirements.txt
-python rename_from_excel.py --config config.json --dry-run
-python rename_from_excel.py --config config.json --apply
+python scripts/rename_from_excel.py --dry-run
+python scripts/rename_from_excel.py --apply
 ```
+
+Run these commands from the repository root. The default configuration is
+`config/config.json`, resolved relative to the script regardless of the working
+directory. Use `--config path/to/config.json` to select another configuration.
 
 The console prints `Working... please wait.` immediately and repeats an activity
 message every five seconds until the script finishes.
 
-For another dataset, edit `config.json`, set your root directory and Excel
+For another dataset, edit `config/config.json`, set your root directory and Excel
 path, and select the source and destination column names. Paths are relative to
 the configuration file. `sheet_name: null` selects the active worksheet. The
-existing `config.json` still points to your current dataset and workbook.
+existing configuration points to `../data/NAP_Davao` and the workbook in
+`../data/mappings/`. Place other datasets under `data/` or use an absolute path.
 
 A mapping `A -> B` renames `A/A.pdf` and `A/A.png` to `B/B.pdf` and `B/B.png`.
 File mappings match the entire stem, preserving the extension and its casing.
@@ -36,7 +58,7 @@ only for matching rename candidates and reused when recording history.
 Swaps and cycles use temporary names. If a rename fails, the script attempts to
 restore the entire run, including files inside folders renamed earlier.
 
-Applied runs keep history in `.rename-history` beside the Python script, outside
+Applied runs keep history in `.rename-history` at the repository root, outside
 the dataset. Each dataset has a separate JSON history file named using a hash of
 its absolute root path. Set `history_directory` in the configuration to use a
 different location; relative paths are resolved against the configuration file,

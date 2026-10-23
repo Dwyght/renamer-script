@@ -1,9 +1,9 @@
 {
-  "excel_path": "86, 89A, 90 file rename.xlsx",
+  "excel_path": "../data/mappings/86, 89A, 90 file rename.xlsx",
   "sheet_name": "Sheet1",
   "source_column": "New",
   "destination_column": "Equivalent from old",
-  "root_directory": "./NAP_Davao",
+  "root_directory": "../data/NAP_Davao",
   "recursive": true,
   "file_extensions": [".pdf", ".tif", ".tiff", ".jpg", ".jpeg", ".png"],
   "rename_files": true,

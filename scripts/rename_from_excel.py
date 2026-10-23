@@ -12,6 +12,7 @@ from pathlib import Path
 
 STATE_NAME = '.rename-state.json'
 LOCK_NAME = '.rename.lock'
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def validate_basename(value):
@@ -328,7 +329,7 @@ def run(root, config, mapping, apply, state_path):
 
 def _main():
     parser = argparse.ArgumentParser(description='Rename files and folders using an Excel mapping')
-    parser.add_argument('--config', type=Path, default=Path(__file__).with_name('config.json'))
+    parser.add_argument('--config', type=Path, default=PROJECT_ROOT / 'config' / 'config.json')
     parser.add_argument('--apply', action='store_true', help='Override dry_run and perform renaming')
     parser.add_argument('--dry-run', action='store_true', help='Preview even if dry_run is false in config')
     args = parser.parse_args()
@@ -350,7 +351,7 @@ def _main():
         apply = not args.dry_run and (args.apply or not config.get('dry_run', True))
         print(f'Mode: {"APPLY" if apply else "DRY RUN"} | Root: {root} | Mappings: {len(mapping)}')
         history_directory = ((base / config['history_directory']) if 'history_directory' in config
-                             else Path(__file__).resolve().parent / '.rename-history')
+                             else PROJECT_ROOT / '.rename-history')
         state_path, lock = history_paths(root, history_directory)
         legacy = root / STATE_NAME
         if os.path.lexists(lock) or os.path.lexists(root / LOCK_NAME):
