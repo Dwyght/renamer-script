@@ -1,0 +1,12 @@
+{
+  "excel_path": "86, 89A, 90 file rename.xlsx",
+  "sheet_name": "Sheet1",
+  "source_column": "New",
+  "destination_column": "Equivalent from old",
+  "root_directory": "./NAP_Davao",
+  "recursive": true,
+  "file_extensions": [".pdf", ".tif", ".tiff", ".jpg", ".jpeg", ".png"],
+  "rename_files": true,
+  "rename_folders": true,
+  "dry_run": true
+}
